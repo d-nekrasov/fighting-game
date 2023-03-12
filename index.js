@@ -2,13 +2,13 @@ const CANVAS = document.querySelector('canvas');
 const c = CANVAS.getContext('2d');
 const GRAVITY = 0.7;
 const KEYS = {
-	a: {
+	KeyA: {
 		pressed: false
 	},
-	d: {
+	KeyD: {
 		pressed: false
 	},
-	w: {
+	KeyW: {
 		pressed: false
 	},
 	ArrowRight: {
@@ -89,9 +89,9 @@ function animate() {
 
 	//Player 1 movement
 	player1.velocity.x = 0
-	if(KEYS.a.pressed && player1.lastKey === 'a'){
+	if(KEYS.KeyA.pressed && player1.lastKey === 'KeyA'){
 		player1.velocity.x = -5;
-	}else if(KEYS.d.pressed &&  player1.lastKey === 'd') {
+	}else if(KEYS.KeyD.pressed &&  player1.lastKey === 'KeyD') {
 		player1.velocity.x = 5;
 	}
 
@@ -109,18 +109,18 @@ animate()
 
 
 window.addEventListener('keydown', (event)=>{
-	console.log(event.key)
-	switch (event.key) {
+	console.log(event)
+	switch (event.code) {
 		//Player 1
-		case 'd':
-			KEYS.d.pressed = true
-			player1.lastKey = 'd'
+		case 'KeyD':
+			KEYS.KeyD.pressed = true
+			player1.lastKey = 'KeyD'
 			break
-		case 'a':
-			KEYS.a.pressed = true
-			player1.lastKey = 'a'
+		case 'KeyA':
+			KEYS.KeyA.pressed = true
+			player1.lastKey = 'KeyA'
 			break
-		case 'w':
+		case 'KeyW':
 			player1.velocity.y = -20
 			break
 		//Player 2
@@ -140,13 +140,13 @@ window.addEventListener('keydown', (event)=>{
 })
 
 window.addEventListener('keyup', (event)=>{
-	switch (event.key) {
+	switch (event.code) {
 		//Player 1
-		case 'd':
-			KEYS.d.pressed = false
+		case 'KeyD':
+			KEYS.KeyD.pressed = false
 			break
-		case 'a':
-			KEYS.a.pressed = false
+		case 'KeyA':
+			KEYS.KeyA.pressed = false
 			break
 
 		//Player 2
