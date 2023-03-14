@@ -25,6 +25,9 @@ const KEYS = {
 CANVAS.width = 1024;
 CANVAS.height = 576;
 
+/**
+ * Create canvas
+ */
 c.fillRect(0, 0, CANVAS.width, CANVAS.height)
 
 
@@ -85,6 +88,10 @@ class Player {
 	}
 }
 
+/**
+ *
+ * @type {Player}
+ */
 const player1 = new Player({
 	position: {
 		x: 0, y: 0,
@@ -97,7 +104,10 @@ const player1 = new Player({
 	}
 })
 
-
+/**
+ *
+ * @type {Player}
+ */
 const player2 = new Player({
 	position: {
 		x: 400, y: 0,
@@ -111,6 +121,12 @@ const player2 = new Player({
 	}
 })
 
+/**
+ *
+ * @param rectangle1
+ * @param rectangle2
+ * @returns {boolean}
+ */
 function rectangularCollision({rectangle1, rectangle2}){
 	return (
 		rectangle1.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
@@ -147,8 +163,9 @@ function animate() {
 		player2.velocity.x = 5;
 	}
 
-	//Detect for collision
-
+	/**
+	 * Detect for collision
+	 */
 	//Player1
 	if(rectangularCollision({rectangle1: player1, rectangle2: player2}) && player1.isAttacking ){
 		player1.isAttacking = false;
