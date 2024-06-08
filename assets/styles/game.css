@@ -1,0 +1,115 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0f0f0f;
+}
+#game {
+    position: relative;
+    min-height: 100%;
+    display: inline-block;
+}
+
+#statusBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.health {
+    background-color: #fff;
+    height: 50px;
+    width: 40%;
+    padding: 5px;
+    /*border-radius: 50px;*/
+    overflow: hidden;
+    display: flex;
+}
+
+/*.health:first-child {*/
+/*    border-bottom-left-radius: 50px;*/
+/*    border-top-left-radius: 50px;*/
+/*    justify-content: end;*/
+/*}*/
+
+/*.health:first-child .health-point {*/
+/*    border-bottom-left-radius: 50px;*/
+/*    border-top-left-radius: 50px;*/
+/*}*/
+
+/*.health:last-child {*/
+/*    border-bottom-right-radius: 50px;*/
+/*    border-top-right-radius: 50px;*/
+/*}*/
+
+/*.health:last-child .health-point {*/
+/*    border-bottom-right-radius: 50px;*/
+/*    border-top-right-radius: 50px;*/
+/*}*/
+
+.health .health-point {
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.timer {
+    background-color: transparent;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    padding: 5px;
+}
+
+.timer .timer-count {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5em;
+    background-color: transparent;
+    color: #fff;
+}
+
+#gameStatus {
+    position: absolute;
+    left: 0;
+    top: 200px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameStatus p {
+    font-size: 10em;
+    color: white;
+    /*background: #FF0000;*/
+    /*background: linear-gradient(to left, #FF0000 0%, #FFFF00 50%, #FF0000 100%);*/
+    /*-webkit-background-clip: text;*/
+    /*-webkit-text-fill-color: transparent;*/
+}

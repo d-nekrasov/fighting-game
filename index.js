@@ -1,6 +1,8 @@
-const CANVAS = document.querySelector('canvas');
-const c = CANVAS.getContext('2d');
-const GRAVITY = 0.7;
+import {Sprite} from "./core/classes/sprite.js";
+import {Player} from "./core/classes/player.js";
+import {timerId, rectangularCollision, determinateWinner, decreaseTimer} from "./core/utilites.js";
+
+
 const KEYS = {
 	KeyA: {
 		pressed: false
@@ -22,69 +24,43 @@ const KEYS = {
 	}
 }
 
-CANVAS.width = 1024;
-CANVAS.height = 576;
 
+// Создание Canvas и его контекста
+const CANVAS = document.querySelector('canvas');
+const c = CANVAS.getContext('2d');
+CANVAS.width = 1024
+CANVAS.height = 576
 c.fillRect(0, 0, CANVAS.width, CANVAS.height)
 
 
-class Player {
-	constructor({position, velocity, color = 'red', offset}) {
-		this.position = position;
-		this.velocity  = velocity;
-		this.height = 150;
-		this.width = 50;
-		this.lastKey = '';
-		this.color = color;
-		this.isAttacking = false;
-		this.attackBox = {
-			position: {
-				x: this.position.x,
-				y: this.position.y,
-			},
-			width: 100,
-			height: 50,
-			offset
-		}
+// Спрайты окружения
+const background = new Sprite({
+	position: {
+		x: 0,
+		y: 0
+	},
+	imageSrc: './assets/sprites/background.png',
+	canvas: {
+		CANVAS: CANVAS,
+		context: c
 	}
 
-	draw() {
-		c.fillStyle = this.color;
-		c.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-		//Attack box
-		if(this.isAttacking){
-			c.fillStyle = "green";
-			c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-		}
-
+})
+const shop = new Sprite({
+	position: {
+		x: 700,
+		y: 135
+	},
+	imageSrc: './assets/sprites/shop.png',
+	scale: 2.7,
+	frames: 6,
+	canvas: {
+		CANVAS: CANVAS,
+		context: c
 	}
+})
 
-	update() {
-		this.draw();
-
-		this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
-		this.attackBox.position.y = this.position.y;
-
-		this.position.x += this.velocity.x
-		this.position.y += this.velocity.y
-
-		if(this.position.y + this.height + this.velocity.y >= CANVAS.height) {
-			this.velocity.y = 0;
-		}
-		else{
-			this.velocity.y += GRAVITY
-		}
-	}
-
-	attack(){
-		this.isAttacking = true;
-		setTimeout(()=>{
-			this.isAttacking = false;
-		}, 100)
-	}
-}
-
+// Создание игроков
 const player1 = new Player({
 	position: {
 		x: 0, y: 0,
@@ -94,10 +70,12 @@ const player1 = new Player({
 	},
 	offset: {
 		x: 0, y: 0
+	},
+	canvas: {
+		CANVAS: CANVAS,
+		context: c
 	}
 })
-
-
 const player2 = new Player({
 	position: {
 		x: 400, y: 0,
@@ -108,19 +86,18 @@ const player2 = new Player({
 	color: 'blue',
 	offset: {
 		x: -50, y: 0
+	},
+	canvas: {
+		CANVAS: CANVAS,
+		context: c
 	}
 })
 
-function rectangularCollision({rectangle1, rectangle2}){
-	return (
-		rectangle1.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
-		rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
-		rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-		rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
-	)
-}
+
+decreaseTimer(player1, player2)
 
 function animate() {
+
 	window.requestAnimationFrame(animate)
 	c.fillStyle = '#000000'
 	c.fillRect(0,0, CANVAS.width, CANVAS.height)
@@ -128,6 +105,9 @@ function animate() {
 	c.font = '24px Sans-Serif'
 	c.fillText('P1', player1.position.x, player1.position.y)
 	c.fillText('P2', player2.position.x, player2.position.y)
+	background.update()
+	shop.update()
+
 	player1.update();
 	player2.update()
 
@@ -147,17 +127,28 @@ function animate() {
 		player2.velocity.x = 5;
 	}
 
-	//Detect for collision
-
+	/**
+	 * Detect for collision
+	 */
 	//Player1
 	if(rectangularCollision({rectangle1: player1, rectangle2: player2}) && player1.isAttacking ){
 		player1.isAttacking = false;
+		player2.health  -= 10
+		document.querySelector('#player2Health .health-point').style.width = `${player2.health}%`
+		if(player2.health <= 0) {
+			determinateWinner(player1, player2, timerId)
+		}
 		console.log('Player1 attack')
 	}
 
 	//Player2
 	if(rectangularCollision({rectangle1: player2, rectangle2: player1}) && player2.isAttacking ){
 		player2.isAttacking = false;
+		player1.health  -= 10
+		document.querySelector('#player1Health .health-point').style.width = `${player1.health}%`
+		if(player1.health <= 0) {
+			determinateWinner(player1, player2, timerId)
+		}
 		console.log('Player2 attack')
 	}
 
