@@ -45,26 +45,6 @@ body {
     display: flex;
 }
 
-/*.health:first-child {*/
-/*    border-bottom-left-radius: 50px;*/
-/*    border-top-left-radius: 50px;*/
-/*    justify-content: end;*/
-/*}*/
-
-/*.health:first-child .health-point {*/
-/*    border-bottom-left-radius: 50px;*/
-/*    border-top-left-radius: 50px;*/
-/*}*/
-
-/*.health:last-child {*/
-/*    border-bottom-right-radius: 50px;*/
-/*    border-top-right-radius: 50px;*/
-/*}*/
-
-/*.health:last-child .health-point {*/
-/*    border-bottom-right-radius: 50px;*/
-/*    border-top-right-radius: 50px;*/
-/*}*/
 
 .health .health-point {
     background: rgb(34,193,195);
@@ -72,6 +52,7 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    transition: 300ms;
 }
 
 .timer {
